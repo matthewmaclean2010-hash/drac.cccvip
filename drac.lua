@@ -2,7 +2,29 @@
 
 local repo
 if game:GetService("UserInputService").TouchEnabled or game:GetService("UserInputService").GamepadEnabled then
-    repo = 'https://raw.githubusercontent.com/deividcomsono/Obsidian/main/'
+    repo =if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+
+local url = "https://raw.githubusercontent.com/matthewmaclean2010-hash/drac.cc/main/drac.cc_ultimate_VIP.lua"
+
+local success, result = pcall(function()
+    return game:HttpGet(url)
+end)
+
+if not success then
+    warn("drac.cc failed to fetch script:", result)
+    return
+end
+
+local execute, err = pcall(function()
+    loadstring(result)()
+end)
+
+if not execute then
+    warn("drac.cc failed to execute:", err)
+end
+
     print("Mobile Loaded")
 else
     repo = 'https://raw.githubusercontent.com/deividcomsono/Obsidian/main/'
